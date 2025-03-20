@@ -1,0 +1,33 @@
+@import "tailwindcss";
+/* @custom-variant dark (&:where(.dark, .dark *)); */
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@plugin "daisyui" {
+    themes: light --default, dark --prefersdark;
+}
+
+
+.btn-success {
+    @apply bg-green-500 text-white font-bold py-2 px-2 rounded ml-1 cursor-pointer text-sm;
+}
+
+.btn-danger {
+    @apply bg-red-500 text-white font-bold py-2 px-2 rounded ml-1 cursor-pointer text-sm;
+}
+
+.btn-primary {
+    @apply bg-blue-500 text-white font-bold py-2 px-2 rounded ml-1 cursor-pointer text-sm;
+}
+
+.btn-success:hover {
+    @apply bg-green-700;
+}
+
+.btn-danger:hover {
+    @apply bg-red-700;
+}
+
+.btn-primary:hover {
+    @apply bg-blue-700;
+}

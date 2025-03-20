@@ -55,7 +55,7 @@ const ExpenseModal = ({ title, data, state }) => {
             }
         } catch (error) {
             console.log(error);
-            toast('something went wrong', {
+            toast(error.response.data.error || 'something went wrong', {
                 className: 'bg-gray-900 text-base-content',
                 duration: 4000,
                 position: 'top-right',

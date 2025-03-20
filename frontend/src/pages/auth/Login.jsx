@@ -6,12 +6,13 @@ import { useAuthContext } from '../../App.jsx';
 
 const Login = () => {
     const { setUser } = useAuthContext();
+    const [loading, setLoading] = useState(false);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = async () => {
-
+    const handleLogin = async (e) => {
+        e.preventDefault();
         if (!username || !password) {
             return toast('Please provide in all fields.', {
                 duration: 4000,
@@ -21,6 +22,7 @@ const Login = () => {
         }
 
         try {
+            setLoading(true);
             const res = await axios.post('api/auth/login', { username, password });
             if (res.status === 200) {
                 setUser(res.data);
@@ -36,13 +38,15 @@ const Login = () => {
                 position: 'top-right',
                 type: 'error',
             });
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <div className='h-screen w-full dark:bg-gray-900 bg-gray-200'>
             <div className='flex justify-center items-center h-full'>
-                <div className='bg-white w-[350px] dark:bg-gray-800 shadow-md rounded px-8 pt-4 pb-8 mb-4 flex flex-col'>
+                <form onSubmit={handleLogin} className='bg-white w-[350px] dark:bg-gray-800 shadow-md rounded px-8 pt-4 pb-8 mb-4 flex flex-col'>
                     <h4 className='text-center dark:text-gray-400 text-gray-700'>Login your account.</h4>
                     <h3 className='text-2xl text-center dark:text-gray-400 text-gray-700 font-bold mb-4'>Welcome Back 😄</h3>
                     <div className='mb-4'>
@@ -66,9 +70,9 @@ const Login = () => {
 
                     <div className='flex items-center justify-center'>
                         <button
-                            onClick={handleLogin}
-                            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='button'>
-                            Sign In
+                            type='submit'
+                            className='btn-primary min-w-[65px]'>
+                            {loading ? <span className="loading loading-dots loading-xs"></span> : 'Sign In'}
                         </button>
                     </div>
 
@@ -78,7 +82,7 @@ const Login = () => {
                         </Link>
                     </div>
 
-                </div>
+                </form>
             </div>
         </div>
     )

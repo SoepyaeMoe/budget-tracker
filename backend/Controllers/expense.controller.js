@@ -27,10 +27,12 @@ const addExpense = async (req, res) => {
 
 const getExpenses = async (req, res) => {
     try {
-        const search = req.query.search ? req.query.search : '';
-        const monthInput = req.query.month ? req.query.month : '';
+        const search = req.query.search && req.query.search != 'undefined' ? req.query.search : '';
+        const monthInput = req.query.month && req.query.month != 'undefined' ? req.query.month : '';
+        const startDate = req.query.startDate && req.query.startDate != 'undefined' ? req.query.startDate : '';
+        const endDate = req.query.endDate && req.query.endDate != 'undefined' ? req.query.endDate : '';
         const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
+        const limit = req.query.limit ? parseInt(req.query.limit) : Infinity;
 
         const query = { userId: req.user._id };
 
@@ -49,6 +51,15 @@ const getExpenses = async (req, res) => {
                     { $eq: [{ $year: '$date' }, parseInt(year)] }
                 ]
             };
+        }
+
+        if (startDate && endDate) {
+            query.$expr = {
+                $and: [
+                    { $gte: ['$date', new Date(startDate)] },
+                    { $lte: ['$date', new Date(endDate)] }
+                ]
+            }
         }
 
         const expenses = await Expense.find(query)

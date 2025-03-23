@@ -85,12 +85,12 @@ const Income = () => {
     });
     const handleFilter = (e) => {
         e.preventDefault();
-        dispatch(fetchIncomes(filterFormData));
+        dispatch(fetchIncomes(filterFormData, page, limit));
     };
 
     const clearFilterFormData = () => {
         setFilterFormData({ search: '', month: '' });
-        dispatch(fetchIncomes({ search: '', month: '' }));
+        dispatch(fetchIncomes(filterFormData, page, limit));
     };
 
     const nextPage = () => {
@@ -144,22 +144,20 @@ const Income = () => {
                             <table className="table">
                                 <thead>
                                     <tr>
-                                        <th>Index</th>
+                                        <th>Date</th>
                                         <th>Category</th>
                                         <th>Description</th>
                                         <th>Amount</th>
-                                        <th>Date</th>
                                         <th className='min-w-[110px]'></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data.incomes.map((income, index) => (
-                                        <tr key={index}>
-                                            <th>{index + 1}</th>
+                                        <tr key={index} className='hover:bg-base-300'>
+                                            <td>{dateFormat(income.date)}</td>
                                             <td>{income.category}</td>
                                             <td>{income.description}</td>
                                             <td className='text-success'>{income.amount}</td>
-                                            <td>{dateFormat(income.date)}</td>
                                             <td>
                                                 <button
                                                     onClick={() => handleEdit(income._id)}

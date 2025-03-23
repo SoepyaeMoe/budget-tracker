@@ -138,22 +138,20 @@ const Expense = () => {
                                     <table className="table">
                                         <thead>
                                             <tr>
-                                                <th>Index</th>
+                                                <th>Date</th>
                                                 <th>Category</th>
                                                 <th>Description</th>
                                                 <th>Amount</th>
-                                                <th>Date</th>
                                                 <th className='min-w-[110px]'></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {data.expenses.map((expense, index) => (
-                                                <tr key={index}>
-                                                    <th>{index + 1}</th>
+                                                <tr key={index} className='hover:bg-base-300'>
+                                                    <td>{dateFormat(expense.date)}</td>
                                                     <td>{expense.category}</td>
                                                     <td>{expense.description}</td>
                                                     <td className='text-error'>{expense.amount}</td>
-                                                    <td>{dateFormat(expense.date)}</td>
                                                     <td>
                                                         <button
                                                             onClick={() => handleEdit(expense._id)}

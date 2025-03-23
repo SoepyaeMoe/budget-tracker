@@ -6,6 +6,7 @@ import { useAuthContext } from '../../App.jsx';
 
 const SignUp = () => {
     const { setUser } = useAuthContext();
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({ fullname: '', username: '', password: '', confirm_password: '' });
 
@@ -17,6 +18,7 @@ const SignUp = () => {
     const handelSingUp = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true);
             const res = await axios.post('api/auth/signup', formData);
             if (res.status === 201) {
                 setUser(res.data);
@@ -32,6 +34,8 @@ const SignUp = () => {
                 position: 'top-right',
                 type: 'error',
             });
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -80,8 +84,8 @@ const SignUp = () => {
                     </div>
 
                     <div className='flex items-center justify-center'>
-                        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
-                            Sign Up
+                        <button className='btn-primary min-w-[65px] h-10' type='submit'>
+                            {loading ? <span className="loading loading-dots loading-xs"></span> : 'Sign Up'}
                         </button>
                     </div>
 

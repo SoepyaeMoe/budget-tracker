@@ -8,10 +8,10 @@ const useFetchIncomes = () => {
     const [status, setStatus] = useState('idle');
     const { data } = useSelector(state => state.incomes);
 
-    const fetchIncomes = async ({ search, month }, page, limit) => {
+    const fetchIncomes = async ({ search, month, startDate, endDate }, page, limit) => {
         setStatus('loading');
         try {
-            const res = await axios.get(`/api/income?search=${search}&month=${month}&page=${page}&limit=${limit}`);
+            const res = await axios.get(`/api/income?search=${search}&month=${month}&startDate=${startDate}&endDate=${endDate}&page=${page}&limit=${limit}`);
             if (res.status === 200) {
                 setStatus('succeeded');
                 dispatch(initializeIncomes(res.data));

@@ -84,7 +84,7 @@ const SignUp = () => {
                     </div>
 
                     <div className='flex items-center justify-center'>
-                        <button className='btn-primary min-w-[65px]' type='submit'>
+                        <button className='btn-primary min-w-[65px] h-10' type='submit'>
                             {loading ? <span className="loading loading-dots loading-xs"></span> : 'Sign Up'}
                         </button>
                     </div>

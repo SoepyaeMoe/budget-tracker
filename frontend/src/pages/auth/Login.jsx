@@ -71,7 +71,7 @@ const Login = () => {
                     <div className='flex items-center justify-center'>
                         <button
                             type='submit'
-                            className='btn-primary min-w-[65px]'>
+                            className='btn-primary min-w-[65px] h-10'>
                             {loading ? <span className="loading loading-dots loading-xs"></span> : 'Sign In'}
                         </button>
                     </div>

@@ -71,21 +71,21 @@ const Home = () => {
                 </div>
 
                 <div className='grid grid-cols-3 gap-2 mb-8 mt-1'>
-                    <div className="card bg-base-100 card-sm md:card-md shadow-sm">
+                    <div className="card bg-gradient-to-br bg-blue-200 to-blue-100 dark:bg-gradient-to-br dark:from-base-100 dark:to-gray-700 card-sm md:card-md shadow-sm">
                         <div className="card-body">
-                            <h2 className="card-title">Total Income</h2>
-                            <p className='text-success text-xl'>{totalIncome()}</p>
+                            <h2 className="card-title ">Total Income</h2>
+                            <p className='text-success font-semibold text-xl'>{totalIncome()}</p>
                         </div>
                     </div>
 
-                    <div className="card bg-base-100 card-sm md:card-md shadow-sm">
+                    <div className="card bg-gradient-to-br bg-blue-200 to-blue-100 dark:bg-gradient-to-br dark:from-base-100 dark:to-gray-700 card-sm md:card-md shadow-sm">
                         <div className="card-body">
                             <h2 className="card-title">Total Expenses</h2>
                             <p className='text-error text-xl'>{totalExpense()}</p>
                         </div>
                     </div>
 
-                    <div className="card bg-base-100 card-sm md:card-md shadow-sm">
+                    <div className="card bg-gradient-to-br bg-blue-200 to-blue-100 dark:bg-gradient-to-br dark:from-base-100 dark:to-gray-700 card-sm md:card-md shadow-sm">
                         <div className="card-body">
                             <h2 className="card-title">Remaining Balance</h2>
                             <p className={(totalIncome() - totalExpense() > 0 ? 'text-success' : 'text-error') + " text-xl"}>{totalIncome() - totalExpense()}</p>

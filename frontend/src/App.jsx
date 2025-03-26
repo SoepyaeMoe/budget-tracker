@@ -11,6 +11,7 @@ import Login from './pages/auth/Login.jsx';
 import SignUp from './pages/auth/SignUp.jsx';
 import Income from './pages/income/Income.jsx';
 import Expense from './pages/expense/Expense.jsx';
+import Profile from "./pages/profile/Profile.jsx";
 
 export const AuthContext = createContext();
 export const useAuthContext = () => useContext(AuthContext);
@@ -74,6 +75,7 @@ function App() {
           <Route path="/" element={user ? <Home /> : <Navigate to={"/login"} />} />
           <Route path="/income" element={user ? <Income /> : <Navigate to={"/login"} />} />
           <Route path="/expense" element={user ? <Expense /> : <Navigate to={"/login"} />} />
+          <Route path="/profile" element={user ? <Profile /> : <Navigate to={"/login"} />} />
         </Routes>
       </AuthContext.Provider>
     </Provider>

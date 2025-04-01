@@ -6,12 +6,11 @@ import generateTokenAndSendCookie from "../utils/generateToken.js";
 
 const signup = async (req, res) => {
     try {
-        const { username, fullname, password, confirm_password } = req.body;
+        const { username, fullname, password, confirm_password, platform = 'web' } = req.body;
 
         if (!username, !fullname, !password, !confirm_password) {
             return res.status(400).json({ error: "Please provide in all fields." });
         }
-
 
         if (password !== confirm_password) {
             return res.status(400).json({ error: "Confirm password does not match." });
@@ -29,12 +28,22 @@ const signup = async (req, res) => {
         const newUser = new User({ username, fullname, password: hashPassword });
 
         if (newUser) {
-            generateTokenAndSendCookie(newUser._id, res);
+            const token = generateTokenAndSendCookie(newUser._id, res, platform);
             await newUser.save();
+            if (platform === 'web') {
+                res.status(201).json({
+                    _id: newUser._id,
+                    fullname: newUser.fullname,
+                    username: newUser.username
+                });
+            }
             res.status(201).json({
-                _id: newUser._id,
-                fullname: newUser.fullname,
-                username: newUser.username
+                token,
+                user: {
+                    _id: newUser._id,
+                    fullname: newUser.fullname,
+                    username: newUser.username
+                }
             });
         }
     } catch (error) {
@@ -45,7 +54,7 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username, password, platform = 'web' } = req.body;
 
         const user = await User.findOne({ username });
 
@@ -64,11 +73,21 @@ const login = async (req, res) => {
         }
 
         if (isCorrectPassword) {
-            generateTokenAndSendCookie(user._id, res);
+            const token = generateTokenAndSendCookie(user._id, res, platform);
+            if (platform === 'web') {
+                res.status(200).json({
+                    _id: user._id,
+                    fullname: user.fullname,
+                    username: user.username
+                });
+            }
             res.status(200).json({
-                _id: user._id,
-                fullname: user.fullname,
-                username: user.username
+                token,
+                user: {
+                    _id: user._id,
+                    fullname: user.fullname,
+                    username: user.username
+                }
             });
         }
 
